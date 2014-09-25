@@ -48,6 +48,7 @@ com_crashlytics_export_strings.xml
 
 
 ### ZendFramework ###
+application/library/Zend
 # Composer files
 composer.phar
 vendor/
