@@ -10,6 +10,7 @@ class Storefront_Resource_Category extends SF_Model_Resource_Db_Table_Abstract
 {
     protected $_name = 'category';
     protected $_primary = 'categoryId';
+    protected $_rowClass = 'Storefront_Resource_Category_Item';
     protected $_referenceMap = array(
         'SubCategory' => array(
             'columns' => 'parentId',
