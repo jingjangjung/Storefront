@@ -7,6 +7,7 @@
  * uses the Tabledata Gateway pattern
  */
 class Storefront_Resource_Category extends SF_Model_Resource_Db_Table_Abstract
+    implements Storefront_Resource_Category_Interface
 {
     protected $_name = 'category';
     protected $_primary = 'categoryId';
@@ -18,4 +19,59 @@ class Storefront_Resource_Category extends SF_Model_Resource_Db_Table_Abstract
             'refColumns' => 'categoryId'
         )
     );
+
+
+    /*
+     * Interface implementation
+     */
+
+    /**
+     * fetches all categories within a category that match $parentId
+     *
+     * @param $parentId     parent category ID
+     * @return Zend_Db_Table_Rowset_Abstract
+     */
+    public function getCategoriesByParentId($parentId)
+    {
+        // $select is a Zend_Db_Table_Select instance
+        $select = $this->select()
+            ->where('parentID = ?', $parentId)
+            ->order('name');
+
+        // running and returning the SQL statement to fetch all rows that match
+        return $this->fetchAll($select);
+    }
+
+
+    /**
+     * fetches a category that matches the identity string
+     *
+     * (each category has an unique identity string that will be used
+     * to create user-friendly URLs such as /catalog/hats)
+     *
+     * @param $ident    identity string
+     * @return null|Zend_Db_Table_Row_Abstract
+     */
+    public function getCategoryByIdent($ident)
+    {
+        $select = $this->select()
+            ->where('ident = ?', $ident);
+
+        return $this->fetchRow($select);
+    }
+
+
+    /**
+     * fetches a category by category Id
+     *
+     * @param $id       category ID
+     * @return null|Zend_Db_Table_Row_Abstract
+     */
+    public function getCategoryById($id)
+    {
+        $select = $this->select()
+            ->where('categoryId = ?', $id);
+
+        return $this->fetchRow($select);
+    }
 }
