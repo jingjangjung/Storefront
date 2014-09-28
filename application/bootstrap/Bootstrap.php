@@ -96,4 +96,31 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 ->setProfiler($profiler);
         }
     }
+
+
+    protected function _initDefaultModuleAutoloader()
+    {
+        $this->_logger->info('Bootstrap ' . __METHOD__);
+
+        // instantiating a the autoloader based on module directory
+        $this->_resourceLoader = new Zend_Application_Module_Autoloader(
+            array(
+                'namespace' => 'Storefront',
+                'basePath' => APPLICATION_PATH . '/modules/storefront'
+            )
+        );
+
+        // customizing resource types
+        $this->_resourceLoader->addResourceTypes(
+            array(
+                'modelResource' => array(
+                    'path' => 'models/resources',
+                    'namespace' => 'Resource'
+                ),
+                'service' => array(
+                    'path' => 'services',
+                    'namespace' => 'Service'
+                )
+        ));
+    }
 }
