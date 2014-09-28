@@ -1,5 +1,20 @@
 <?php
 
+// any Zend_Db_table component uses ZendLoader::loadClass() to load dependent classes
+// and this method does not trigger the autoloader, meaning it's necessary to include
+// any class that this current class depends on
+
+if(!class_exists('Storefront_Resource_ProductImage'))
+{
+    require_once dirname(__FILE__) . '/ProductImage.php';
+}
+
+if(!class_exists('Storefront_Resource_Product_Item'))
+{
+    require_once dirname(__FILE__) . '/Product/Item.php';
+}
+
+
 /**
  * Class Storefront_Resource_Product
  *
